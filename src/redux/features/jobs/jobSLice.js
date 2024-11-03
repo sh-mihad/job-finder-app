@@ -10,18 +10,21 @@ const initialState = {
 };
 
 // thunk functions
-export const fetchAllJobs = createAsyncThunk("jobs/fetchJobs",async () => {
-    return await getAllJobs();
-  })
+export const fetchAllJobs = createAsyncThunk("jobs/fetchJobs", async () => {
+  return await getAllJobs();
+});
 export const addJob = createAsyncThunk("jobs/addNewJob", async (data) => {
-    return await addNewJob(data);
-  })
-export const changeJob = createAsyncThunk("jobs/updateJob",async ({ id, data }) => {
+  return await addNewJob(data);
+});
+export const changeJob = createAsyncThunk(
+  "jobs/updateJob",
+  async ({ id, data }) => {
     return await editJob(id, data);
-  })
-export const removeJob = createAsyncThunk("jobs/removeJob",async (id) => {
-    return await deleteJob(id);
-  });
+  }
+);
+export const removeJob = createAsyncThunk("jobs/removeJob", async (id) => {
+  return await deleteJob(id);
+});
 
 // slice
 const jobSlice = createSlice({
@@ -29,60 +32,61 @@ const jobSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder
-    .addCase(fetchAllJobs.pending,(state)=>{
+      .addCase(fetchAllJobs.pending, (state) => {
         state.loading = true;
-        state.error = ""
-    })
-    .addCase(fetchAllJobs.fulfilled,(state,action)=>{
+        state.error = "";
+      })
+      .addCase(fetchAllJobs.fulfilled, (state, action) => {
         state.loading = false;
         state.error = "";
-        state.jobs = action.payload
-    })
-    .addCase(fetchAllJobs.rejected,(state,action)=>{
+        state.jobs = action.payload;
+      })
+      .addCase(fetchAllJobs.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-        state.jobs = []
-    })
-    .addCase(addJob.pending,(state)=>{
+        state.jobs = [];
+      })
+      .addCase(addJob.pending, (state) => {
         state.loading = true;
-        state.error = ""
-    })
-    .addCase(addJob.fulfilled,(state,action)=>{
+        state.error = "";
+      })
+      .addCase(addJob.fulfilled, (state, action) => {
         state.loading = false;
         state.error = "";
-        state.jobs.push(action.payload)
-    })
-    .addCase(addJob.rejected,(state,action)=>{
+        state.jobs.push(action.payload);
+      })
+      .addCase(addJob.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-    })
-    .addCase(changeJob.pending,(state)=>{
+      })
+      .addCase(changeJob.pending, (state) => {
         state.loading = true;
-        state.error = ""
-    })
-    .addCase(changeJob.fulfilled,(state,action)=>{
+        state.error = "";
+      })
+      .addCase(changeJob.fulfilled, (state, action) => {
         state.loading = false;
         state.error = "";
-        const getPosition = state.findIndex(j=>j.id === action.payload.id)
-        state[getPosition] = action.payload
-    })
-    .addCase(changeJob.rejected,(state,action)=>{
+        const getPosition = state.findIndex((j) => j.id === action.payload.id);
+        state[getPosition] = action.payload;
+      })
+      .addCase(changeJob.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-    })
-    .addCase(removeJob.pending,(state)=>{
+      })
+      .addCase(removeJob.pending, (state) => {
         state.loading = true;
-        state.error = ""
-    })
-    .addCase(removeJob.fulfilled,(state,action)=>{
+        state.error = "";
+      })
+      .addCase(removeJob.fulfilled, (state, action) => {
+        console.log("remove fulfiled", action.payload);
         state.loading = false;
         state.error = "";
-         state.filter(j=>j.id !== action.payload)
-    })
-    .addCase(removeJob.rejected,(state,action)=>{
+       state.jobs = state.jobs.filter((j) => j.id !== action.payload);
+      })
+      .addCase(removeJob.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-    })
+      });
   },
 });
 
