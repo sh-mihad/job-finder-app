@@ -16,7 +16,7 @@ export default function Sidebar() {
         <ul className="space-y-4">
           <li>
             <button
-               onClick={()=>handleClick("all")}
+               onClick={()=>handleClick("")}
               className={`main-menu ${filters === "all" && "menu-active"}`}
               id="lws-alljobs-menu"
             >

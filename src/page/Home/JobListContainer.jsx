@@ -9,13 +9,11 @@ export default function JobListContainer() {
   const { jobs, loading, error } = useSelector((state) => state.jobs);
   const { filters, sort, search } = useSelector((state) => state.filters);
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(fetchAllJobs());
   }, [dispatch]);
 
   let displayContent = null;
-  let data = [...jobs];
 
   if (loading) {
     displayContent = <Loading />;
@@ -27,7 +25,7 @@ export default function JobListContainer() {
     displayContent = <p>No Job Found</p>;
   }
   if (!loading && !error && jobs?.length > 0) {
-    displayContent = data
+    displayContent = [...jobs]
       .sort((a, b) => {
         if (sort === "high") {
           return Number(a.salary - b.salary);
@@ -37,7 +35,13 @@ export default function JobListContainer() {
           return true;
         }
       })
-      .map((job) => <List key={job.id} job={job} />);
+      ?.filter((job) =>
+        filters ? filters.toLowerCase().includes(job.type.toLowerCase()) : true
+      )
+      ?.filter((job) =>
+         search ?job.title.toLowerCase().includes(search.toLowerCase())  : true
+      )
+      ?.map((job) => <List key={job?.id} job={job} />) 
   }
 
   return <div className="jobs-list">{displayContent}</div>;

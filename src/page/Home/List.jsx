@@ -12,13 +12,24 @@ export default function List({ job }) {
   const handleDelete = (id)=>{
     dispatch(removeJob(id))
   }
+  let typeColor ;
+  if(type === "Internship"){
+    typeColor = "!text-[#FF5757]"
+  }
+  if(type === "Full Time"){
+    typeColor = "!text-[#FF8A00]"
+  }
+  if(type === "Remote"){
+    typeColor = "!text-[#56E5C4]"
+  }
+  
   return (
     <div className="lws-single-job">
       <div className="flex-1 min-w-0">
         <h2 className="lws-title">{title}</h2>
         <div className="job-footers">
           <div className="lws-type">
-            <i className="fa-solid fa-stop !text-[#FF8A00] text-lg mr-1.5"></i>
+            <i className={`fa-solid fa-stop text-lg mr-1.5 ${typeColor}`}></i>
             {type}
           </div>
           <div className="lws-salary">
