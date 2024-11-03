@@ -1,8 +1,9 @@
+import Layout from "./page/Layout"
 
 function App() {
 
   return (
-    <div>dum react redux toolkit setup</div>
+    <Layout/>
   )
 }
 
