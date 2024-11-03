@@ -34,7 +34,7 @@ const jobSlice = createSlice({
         state.error = ""
     })
     .addCase(fetchAllJobs.fulfilled,(state,action)=>{
-        state.loading = true;
+        state.loading = false;
         state.error = "";
         state.jobs = action.payload
     })
@@ -48,7 +48,7 @@ const jobSlice = createSlice({
         state.error = ""
     })
     .addCase(addJob.fulfilled,(state,action)=>{
-        state.loading = true;
+        state.loading = false;
         state.error = "";
         state.jobs.push(action.payload)
     })
@@ -61,7 +61,7 @@ const jobSlice = createSlice({
         state.error = ""
     })
     .addCase(changeJob.fulfilled,(state,action)=>{
-        state.loading = true;
+        state.loading = false;
         state.error = "";
         const getPosition = state.findIndex(j=>j.id === action.payload.id)
         state[getPosition] = action.payload
@@ -75,7 +75,7 @@ const jobSlice = createSlice({
         state.error = ""
     })
     .addCase(removeJob.fulfilled,(state,action)=>{
-        state.loading = true;
+        state.loading = false;
         state.error = "";
          state.filter(j=>j.id !== action.payload)
     })

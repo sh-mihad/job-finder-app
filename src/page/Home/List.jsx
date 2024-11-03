@@ -1,26 +1,37 @@
-export default function List() {
+import { useNavigate } from "react-router-dom";
+
+export default function List({ job }) {
+  const { id, deadline, salary, type, title } = job || {};
+  const navigate = useNavigate();
+  const handleEditClick = (id) => {
+    navigate(`/edit/${id}`,{ state: job });
+  };
   return (
     <div className="lws-single-job">
       <div className="flex-1 min-w-0">
-        <h2 className="lws-title">Back End Developer</h2>
+        <h2 className="lws-title">{title}</h2>
         <div className="job-footers">
           <div className="lws-type">
             <i className="fa-solid fa-stop !text-[#FF8A00] text-lg mr-1.5"></i>
-            Full-time
+            {type}
           </div>
           <div className="lws-salary">
             <i className="fa-solid fa-bangladeshi-taka-sign text-slate-400 text-lg mr-1.5"></i>
-            BDT 40,000
+            BDT {salary}
           </div>
           <div className="lws-deadline">
             <i className="fa-regular fa-calendar text-slate-400 text-lg mr-1.5"></i>
-            Closing on 2022-12-31
+            Closing on {deadline}
           </div>
         </div>
       </div>
       <div className="mt-5 flex lg:mt-0 lg:ml-4">
         <span className="hidden sm:block">
-          <button type="button" className="lws-edit btn btn-primary">
+          <button
+            onClick={() => handleEditClick(id)}
+            type="button"
+            className="lws-edit btn btn-primary"
+          >
             <i className="fa-solid fa-pen text-gray-300 -ml-1 mr-2"></i>
             Edit
           </button>
